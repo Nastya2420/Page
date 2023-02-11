@@ -59,4 +59,16 @@ public class MoneyTransferTest {
         assertEquals(begBalance1 - sum, endBalance1);
         assertEquals(begBalance2 + sum, endBalance2);
     }
+    @Test
+    @DisplayName("Перевод денег сo второй карты на первую")
+    void shouldTransferMoneyFromSecondToFirstCard1() {
+        sum = 12000;
+        val topUpPage = dashboardPage.clickTopUp(dashboardPage.card1);
+        val cardNum = DataHelper.getSecondCard().getNumber();
+        val dashboardPage2 = topUpPage.successfulTopUp(Integer.toString(sum), cardNum);
+        endBalance1 = dashboardPage2.getBalance(dashboardPage2.card1);
+        endBalance2 = dashboardPage2.getBalance(dashboardPage2.card2);
+        assertEquals(begBalance1 + sum, endBalance1);
+        assertEquals(begBalance2 - sum, endBalance2);
+    }
 }
